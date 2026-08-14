@@ -1,0 +1,11 @@
+Spandan@2944c
+
+🎯 Mere hisaab se Shadow V2 me ye modules hone chahiye:
+📁 File Investigation
+🌐 IP Investigation
+🔗 Domain Investigation
+🔒 URL Investigation
+📧 Email Investigation
+📱 Phone Number Validation (basic metadata only)
+🔑 Hash Investigation
+📄 IOC Investigation

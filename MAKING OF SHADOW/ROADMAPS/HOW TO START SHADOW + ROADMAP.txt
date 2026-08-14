@@ -1,0 +1,374 @@
+to start backend 
+venv\Scripts\python -m uvicorn main:app --reload
+
+GROQ_API_KEY=stored in backend/.env
+
+
+
+**LOCKED. 🔒**
+
+Ab roadmap change nahi karenge jab tak koi bahut zaroori reason na ho.
+
+# 🎯 SHADOW V1 Mission
+
+**Start:** 25 July
+
+**Target:** 10–15 August
+
+**Objective:**
+
+> Build a beginner-friendly Threat Investigation Platform.
+
+---
+
+# ✅ PHASE 1 — Core Platform
+
+### Authentication
+
+* [x] Register
+* [x] Login
+* [x] Logout
+
+### Dashboard
+
+* [x] Dashboard
+* [x] History
+* [x] Scan Details
+
+### File Analysis
+
+* [x] File Upload
+* [x] Metadata
+* [x] Hash Generation
+* [x] VirusTotal Integration
+* [x] Database Storage
+* [ ] Hash Analysis API
+* [ ] File/Hash Toggle UI
+* [ ] Risk Score
+* [ ] AI Explanation
+
+---
+
+# ✅ PHASE 2 — Log Analysis
+
+### Upload
+
+* [ ] Windows Logs
+* [ ] Linux Logs
+* [ ] Apache/Nginx Logs
+
+### Detection Rules
+
+* [ ] Brute Force
+* [ ] Password Spraying
+* [ ] Failed Login Detection
+* [ ] Successful Login after Failures
+* [ ] Suspicious PowerShell
+* [ ] Privilege Escalation (Basic)
+
+### Report
+
+* [ ] Severity
+* [ ] Confidence
+* [ ] MITRE
+* [ ] Recommendations
+
+---
+
+# ✅ PHASE 3 — Network Analysis
+
+### Upload
+
+* [ ] PCAP
+* [ ] Network Logs
+
+### Detection Rules
+
+* [ ] Port Scan
+* [ ] Beaconing (Basic)
+* [ ] DNS Abuse (Basic)
+* [ ] Suspicious HTTP
+
+### Report
+
+* [ ] Source IP
+* [ ] Destination IP
+* [ ] Evidence
+* [ ] Recommendation
+
+---
+
+# ✅ PHASE 4 — IOC Investigation
+
+Support
+
+* [ ] Hash
+* [ ] IP
+* [ ] Domain
+* [ ] URL
+
+Output
+
+* [ ] VirusTotal
+* [ ] OTX
+* [ ] Risk Score
+* [ ] AI Summary
+
+---
+
+# ✅ PHASE 5 — SHADOW AI
+
+AI should answer
+
+* [ ] What happened?
+* [ ] Why detected?
+* [ ] MITRE Explanation
+* [ ] Beginner Explanation
+* [ ] Investigation Steps
+
+---
+
+# ✅ PHASE 6 — Report System
+
+Every analysis must contain:
+
+* [ ] Threat Name
+* [ ] Severity
+* [ ] Confidence
+
+---
+
+## 📌 5W1H Rule
+
+Every report **must** answer:
+
+* [ ] **Who?** → User/IP/File/Domain
+* [ ] **What?** → What happened?
+* [ ] **When?** → Timestamp
+* [ ] **Where?** → Source (Log/File/Network)
+* [ ] **Why?** → Evidence that triggered detection
+* [ ] **How?** → Detection rule used by SHADOW
+
+---
+
+# ✅ Final Report Structure
+
+```
+Threat
+
+Severity
+
+Confidence
+
+---------------------
+
+Who
+
+What
+
+When
+
+Where
+
+Why
+
+How
+
+---------------------
+
+Evidence
+
+MITRE ATT&CK
+
+Recommendations
+
+AI Explanation
+```
+
+---
+
+# 🚫 NOT IN V1
+
+* [ ] Memory Analysis
+* [ ] YARA Rules
+* [ ] Sigma Rules
+* [ ] Sandbox
+* [ ] Email Analysis
+* [ ] Live Monitoring
+* [ ] Multi-user Collaboration
+
+---
+
+# 🏁 Definition of Done (V1 Release)
+
+Before SHADOW V1 is considered complete:
+
+* [ ] All modules working without crashes
+* [ ] Clean UI
+* [ ] Export Report
+* [ ] AI Explanation working
+* [ ] GitHub Repository cleaned
+* [ ] README completed
+* [ ] Screenshots added
+* [ ] Demo video recorded
+* [ ] Final testing completed
+
+---
+
+# 🎯 SHADOW V1 Identity (Locked)
+
+> **SHADOW is a beginner-friendly Threat Investigation Platform.**
+
+It doesn't just say **"this is malicious."**
+
+It answers:
+
+* **What happened?**
+* **Why did it happen?**
+* **How was it detected?**
+* **What should an analyst do next?**
+
+🔒 **Mission locked.** Ab focus sirf execution par. Ek feature complete karenge, test karenge, phir next feature par move karenge. 10–15 August tak ek polished V1 nikalna target rahega. 🚀
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+🛡️ SHADOW V1 — Backend Roadmap
+ 1. Core Hash Analysis 🔒
+Hash validation
+VirusTotal integration
+Threat Gateway
+Normalizer
+Risk Engine + Quality Gate
+Confidence Engine
+Recommendation Engine
+Unknown/error safety
+Persistence + guest behavior
+Automated tests
+
+ 2. Central Analysis Pipeline 🔒
+AnalysisPipeline
+Risk → Confidence → Recommendation orchestration
+Hash router integrated
+Regression testing
+58/58 tests passing
+
+ 3. File Analysis Foundation ← NEXT
+Secure upload validation
+File-size limits
+Extension/content-type checks
+Safe temporary/isolated handling
+MD5 / SHA1 / SHA256 generation
+Basic metadata: name, size, type
+SHA256 → existing Threat Gateway
+Normalize result
+Existing AnalysisPipeline reuse
+Guest/authenticated behavior
+File-analysis tests
+
+ 4. Metadata Extraction
+MIME/type identification
+File size
+Entropy
+PE basics for supported executables
+Graceful unsupported-file handling
+Metadata tests
+
+ 5. IOC Extraction
+URLs
+Domains
+IPv4/IPv6
+Hashes where applicable
+Deduplication + validation
+Extracted IOCs stored separately
+No automatic child IOC → parent risk aggregation
+Context warning if dangerous child IOC exists
+
+ 6. OTX Threat Intelligence
+AlienVault OTX integration
+Provider-specific normalization
+Evidence provenance
+VT + OTX conflict representation
+Introduce Evidence Merger
+Never treat unavailable provider as clean
+Provider failure/rate-limit handling
+
+ 7. Indicator Analysis Expansion
+URL analysis
+Domain analysis
+IP analysis
+Each IOC gets its own analysis
+Reuse central pipeline where compatible
+Parent ↔ child relationship tracking
+
+ 8. Case / Investigation Management
+Create investigation
+Attach scans
+Attach files/IOCs
+Analyst notes
+Investigation history/timeline
+Per-user ownership
+Supabase RLS verification
+
+ 9. Audit Logging
+Upload events
+TI lookups
+Analysis events
+Report generation
+Relevant failures
+User/action/timestamp tracking
+
+ 10. Investigation Reports
+Case summary
+Findings
+Risk + confidence
+IOC table
+Evidence
+Analyst notes
+Recommendations
+Export/report generation
+
+ 11. Backend Hardening
+Rate limiting
+Upload abuse protection
+Error sanitization
+Authentication cleanup (remove temporary user)
+RLS/per-user isolation testing
+Secrets/config validation
+Full integration/regression suite
+
+ 12. AI Assistant 🤖
+Explain deterministic findings
+Beginner-friendly summaries
+Investigation summaries
+Evidence explanation
+Report assistance
+Investigation Q&A
+AI cannot override Risk/Confidence
+AI does not become malware verdict authority
+
+ 13. Frontend Integration / Polish
+Analysis dashboard
+Risk + confidence visualization
+Evidence display
+Quality-gate explanation
+IOC views
+Context-warning badges
+Cases/investigations
+Reports
+AI assistant UI
+Loading/error/unknown states
+
+ 14. Final V1 QA 🔒
+Clean samples
+Suspicious samples
+Malicious samples
+Unknown/not-found
+Provider outage/rate limit
+Partial evidence
+File edge cases
+Guest/auth flows
+Persistence failures
+Cross-user isolation
+Full regression suite
+V1 architecture/documentation freeze
+
+One important thing: Network/log analysis ko main V1 core ke baad rakhunga, unless we explicitly decide to expand V1 scope. SIEM/log/network analysis itself can become a whole subsystem; uske chakkar mein SHADOW V1 kabhi ship hi nahi hoga 😂

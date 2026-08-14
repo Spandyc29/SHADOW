@@ -1,0 +1,131 @@
+🛡️ SHADOW V1 Roadmap
+✅ PHASE 1 — Core Analysis Foundation 🔒
+ Threat Gateway
+ VirusTotal Integration
+ Threat Normalizer
+ Risk Engine
+ Quality Gate
+ Confidence Engine
+ Recommendation Engine
+ Analysis Pipeline
+ Hash Analysis
+ Guest Mode
+ Persistence
+ Automated Testing (58/58)
+
+STATUS: 🔒 LOCKED
+
+📁 PHASE 2 — File Analysis
+ Secure Upload
+ File Validation
+ Safe Storage
+ Hash Generation
+ Metadata Extraction
+ SHA256 → Analysis Pipeline
+ File Result API
+ File Tests
+🔍 PHASE 3 — IOC Extraction
+
+Extract from uploaded files:
+
+ URLs
+ Domains
+ IP Addresses
+ Hashes
+ Deduplication
+ IOC Validation
+
+Rules:
+
+ Every IOC analyzed separately
+ Parent risk NOT auto modified
+ Context Warning support
+🌐 PHASE 4 — Threat Intelligence Expansion
+ AlienVault OTX
+ OTX Normalizer
+ Evidence Merger
+ Multi-provider support
+ Provider conflict handling
+📊 PHASE 5 — Indicator Support
+ Hash
+ File
+ URL
+ Domain
+ IP
+
+All reuse:
+
+ThreatGateway
+
+↓
+
+Normalizer
+
+↓
+
+AnalysisPipeline
+📂 PHASE 6 — Investigation
+ Cases
+ Investigation Timeline
+ Attach Evidence
+ Analyst Notes
+ History
+ Case Management
+📄 PHASE 7 — Reports
+ Investigation Report
+ Evidence Summary
+ IOC Summary
+ Risk Summary
+ Confidence Summary
+ Export
+📜 PHASE 8 — Audit
+ Upload Logs
+ Threat Lookup Logs
+ Analysis Logs
+ Report Logs
+ User Activity
+🎨 PHASE 9 — Frontend
+Universal Components
+ Result Header
+ Risk Card
+ Confidence Card
+ Recommendation Card
+ Technical Details
+ AI Panel
+ Footer
+Type Components
+ Hash Properties
+ File Properties
+ URL Properties
+ Domain Properties
+ IP Properties
+States
+ Loading
+ Error
+ Rate Limit
+ Not Found
+ Unknown
+🤖 PHASE 10 — SHADOW AI
+ AI Explanation
+ Investigation Summary
+ Report Explanation
+ IOC Explanation
+ Threat Explanation
+ AI Chat
+
+Rules:
+
+ AI NEVER changes Risk
+ AI NEVER changes Confidence
+ AI ONLY explains deterministic results
+🔒 PHASE 11 — Final Hardening
+ Authentication Cleanup
+ RLS Verification
+ Error Handling
+ Rate Limiting
+ Security Review
+ Full Regression Testing
+ Documentation
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

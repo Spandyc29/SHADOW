@@ -1,0 +1,212 @@
+/* Settings page styles */
+/* Settings Page Root Layout */
+.settings-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 28px 36px 48px 36px;
+  box-sizing: border-box;
+  color: var(--text-primary, #ffffff);
+}
+
+.settings-header {
+  margin-bottom: 30px;
+}
+
+.settings-header h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.settings-header p {
+  color: var(--text-secondary, #95a5a6);
+  margin: 0;
+}
+
+/* Grid & Cards Alignment */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .settings-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stats-full-width {
+    grid-column: span 2;
+  }
+}
+
+.settings-card {
+  background: var(--card-bg, #1a1a1a);
+  border: 1px solid var(--border, #2e2e2e);
+  border-radius: 16px;
+  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.settings-card h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border, #2e2e2e);
+}
+
+/* Content Element Rows */
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.profile-row:last-child {
+  border-bottom: none;
+}
+
+.settings-label {
+  color: var(--text-secondary, #95a5a6);
+  font-size: 0.95rem;
+}
+
+.settings-value {
+  font-weight: 500;
+}
+
+.section-desc {
+  color: var(--text-secondary, #95a5a6);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.muted {
+  color: var(--text-secondary, #95a5a6);
+  font-size: 0.85rem;
+}
+
+/* Action Inputs & Buttons */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border, #2e2e2e);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-danger {
+  background: rgba(255, 92, 92, 0.1);
+  border: 1px solid rgba(255, 92, 92, 0.2);
+  color: #ff5c5c;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-danger:hover {
+  background: rgba(255, 92, 92, 0.2);
+}
+
+/* Account Statistics Sub-Grid */
+.stats-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+@media (min-width: 540px) {
+  .stats-dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-node {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border, #2e2e2e);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary, #95a5a6);
+}
+
+.stat-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Dynamic State Typography Colors */
+.text-clean { color: #2ecc71; }
+.text-suspicious { color: #f1c40f; }
+.text-malicious { color: #ff5c5c; }
+.text-highlight { color: #3498db; }
+
+.border-clean { border-left: 3px solid #2ecc71; }
+.border-suspicious { border-left: 3px solid #f1c40f; }
+.border-malicious { border-left: 3px solid #ff5c5c; }
+
+/* Appearance Toggle Elements */
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.toggle-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mock-toggle {
+  width: 46px;
+  height: 24px;
+  background: #333333;
+  border-radius: 12px;
+  padding: 2px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.mock-toggle.checked {
+  background: #2ecc71;
+}
+
+.toggle-handle {
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.mock-toggle.checked .toggle-handle {
+  transform: translateX(22px);
+}

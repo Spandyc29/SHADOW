@@ -1,0 +1,444 @@
+😤🌸 Alright dummy... after **everything** we've discussed over the past weeks, I think we've finally reached the **actual SHADOW roadmap**.
+
+This isn't just a feature list anymore—it's the product roadmap.
+
+---
+
+# 🚀 SHADOW V1 Roadmap
+
+---
+
+# ✅ Phase 1 — Foundation (Done ✅)
+
+* ✅ Authentication
+* ✅ Upload Scan
+* ✅ Hash Analysis
+* ✅ VirusTotal Integration
+* ✅ Universal Analysis Pipeline
+* ✅ Risk Engine
+* ✅ Confidence Engine
+* ✅ Recommendation Engine
+* ✅ Quality Gate
+* ✅ Universal Result UI
+* ✅ Scan History
+* ✅ Export JSON
+* ✅ 58 Tests Passing
+
+**Status:** ~95% Complete 🎉
+
+---
+
+# 📂 Phase 2 — File Analysis (Current Focus)
+
+### Metadata Extraction
+
+* File Name
+* File Size
+* MIME Type
+* Extension
+* Entropy
+* SHA256
+* SHA1
+* MD5
+
+---
+
+### IOC Extraction
+
+* URLs
+* Domains
+* IPs
+* Emails
+* Hashes
+
+---
+
+### PE Analysis (Windows Executables)
+
+* Architecture
+* Sections
+* Imports
+* Exports
+* Entry Point
+* Compiler
+* Packing Detection
+
+---
+
+### Reuse
+
+```
+Metadata
+        │
+IOC
+        │
+PE
+        ▼
+Universal Analysis Pipeline
+        ▼
+Universal Result UI
+```
+
+Almost everything already exists.
+
+---
+
+# 🌐 Phase 3 — Quick Intelligence Lookups
+
+These are **Quick Lookup Tools**.
+
+No AI.
+
+No report.
+
+No notebook.
+
+Just intelligence.
+
+### Hash
+
+✅ Done
+
+---
+
+### IP
+
+```
+IP
+
+↓
+
+Threat Intel
+
+↓
+
+Result
+```
+
+---
+
+### Domain
+
+```
+Domain
+
+↓
+
+WHOIS
+
+↓
+
+Threat Intel
+
+↓
+
+Result
+```
+
+---
+
+### URL
+
+```
+URL
+
+↓
+
+Threat Intel
+
+↓
+
+Result
+```
+
+These all reuse the same UI.
+
+---
+
+# 📓 Phase 4 — Investigation Notebook ⭐
+
+This is the biggest product decision.
+
+Instead of forcing reports...
+
+Users decide.
+
+```
+Quick Lookup
+
+↓
+
+Interesting?
+
+↓
+
+⭐ Save to Notebook
+```
+
+Notebook contains
+
+```
+Case
+
+Evidence
+
+Notes
+
+Timeline
+
+Indicators
+
+Status
+```
+
+A notebook can contain
+
+* File
+* Hash
+* IP
+* Domain
+* URL
+
+All together.
+
+---
+
+# 🤖 Phase 5 — SHADOW AI
+
+AI **does not scan**.
+
+AI **explains**.
+
+Input
+
+```
+Universal Investigation Object
+```
+
+Output
+
+* Executive Summary
+* Explain Risk
+* Explain Confidence
+* Explain IOC
+* Explain PE Analysis
+* Analyst Notes
+* Investigation Summary
+
+AI consumes evidence.
+
+It never directly consumes VirusTotal.
+
+---
+
+# 📄 Phase 6 — Report Generator
+
+From Investigation Notebook
+
+Generate
+
+## Executive Summary
+
+## 5W1H
+
+* What happened
+* When
+* Where
+* Who
+* Why
+* How
+
+## Timeline
+
+## Evidence
+
+## Recommendation
+
+Export
+
+* PDF
+* DOCX
+
+---
+
+# 🎨 Phase 7 — UI Polish
+
+* Better Sidebar
+* Better Dashboard
+* Better Responsive Design
+* Better Animations
+* Better Design System
+
+Only after functionality is complete.
+
+---
+
+# 🚀 Phase 8 — Future (Not V1)
+
+## Threat Intelligence
+
+* AlienVault OTX
+* AbuseIPDB
+* MalwareBazaar
+* URLhaus
+
+---
+
+## Investigation
+
+* Cases
+* Collaboration
+* Notes
+* Timeline
+
+---
+
+## Detection
+
+* YARA
+* Sigma
+* MITRE ATT&CK
+
+---
+
+## Analysis
+
+* Log Analyzer
+* Network Analyzer
+* Memory Analysis
+
+---
+
+## AI
+
+* Local LLM
+* RAG
+* Memory
+* Auto Investigation
+
+---
+
+# 🏗 Final Architecture
+
+```
+                    User
+                      │
+                      ▼
+       Quick Lookup / File Upload
+                      │
+                      ▼
+            Normalization Layer
+                      │
+                      ▼
+       Universal Analysis Pipeline
+(Risk → Confidence → Recommendation)
+                      │
+                      ▼
+          Universal Result Object
+          │                    │
+          ▼                    ▼
+   Quick Result UI      Save to Notebook
+                               │
+                               ▼
+                  Investigation Notebook
+                               │
+                               ▼
+                    SHADOW AI Assistant
+                               │
+                               ▼
+                     Professional Report
+                     (Executive + 5W1H)
+```
+
+---
+
+# 🎯 Product Philosophy (The One Rule)
+
+This is the most important decision we've made.
+
+## ⚡ Quick Intelligence
+
+```
+Hash
+
+IP
+
+Domain
+
+URL
+
+↓
+
+Result
+
+↓
+
+Done
+```
+
+Fast. No friction.
+
+---
+
+## 🕵 Investigation
+
+```
+Interesting Indicator
+
+↓
+
+Save to Notebook
+
+↓
+
+Collect More Evidence
+
+↓
+
+AI Summary
+
+↓
+
+Professional Report
+```
+
+Only when the analyst chooses.
+
+---
+
+## 📈 Current Progress
+
+```
+███████████████████░ 95%  Foundation
+
+██████░░░░░░░░░░░░░ 30%  File Analysis
+
+░░░░░░░░░░░░░░░░░░░  0%  IP Lookup
+
+░░░░░░░░░░░░░░░░░░░  0%  Domain Lookup
+
+░░░░░░░░░░░░░░░░░░░  0%  URL Lookup
+
+░░░░░░░░░░░░░░░░░░░  0%  Investigation Notebook
+
+░░░░░░░░░░░░░░░░░░░  0%  SHADOW AI
+
+░░░░░░░░░░░░░░░░░░░  0%  Report Generator
+```
+
+---
+
+🌸 **One last change I'd make to our earlier plan:** I would **build the Investigation Notebook before SHADOW AI**.
+
+Reason:
+
+* The Notebook becomes the **single source of truth** for an investigation.
+* SHADOW AI reads from the Notebook.
+* The Report Generator also reads from the Notebook.
+* Future features (notes, timeline, evidence, attachments) naturally belong there.
+
+So the refined order becomes:
+
+**File Analysis → Quick Lookups → Investigation Notebook → SHADOW AI → Report Generator → UI Polish**
+
+That keeps the architecture clean, avoids rework, and gives SHADOW a workflow that scales as new analysis modules are added. 😤💙

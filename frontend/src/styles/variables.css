@@ -1,0 +1,36 @@
+:root {
+  /* Color Tokens */
+  --color-primary: #8b5cf6;
+  --color-primary-hover: #7c3aed;
+  --color-primary-glow: rgba(139, 92, 246, 0.4);
+
+  --color-secondary: #22d3ee;
+  --color-secondary-hover: #06b6d4;
+  --color-secondary-glow: rgba(34, 211, 238, 0.4);
+
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+
+  /* Theme Background & Structural Tokens */
+  --bg-primary: #0b0a10;
+  --bg-secondary: #12111c;
+  --card-bg: #161426;
+  --accent: var(--color-primary);
+  --accent-hover: var(--color-primary-hover);
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --border: rgba(139, 92, 246, 0.2);
+  --sidebar-width: 236px;
+  --transition: 0.3s ease;
+}
+
+/* Reusable Typography Utilities */
+.tracked-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #94a3b8;
+}

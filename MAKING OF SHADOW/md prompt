@@ -1,0 +1,39 @@
+After completing this task, create a file named 
+UNDERSTANDING_[feature-name].md in the project root.
+
+Write it in very simple, plain English (no jargon, no complex 
+technical terms) — as if explaining to someone who is not deeply 
+technical but understands basic coding concepts.
+
+Include these sections:
+
+1. WHAT WAS BUILT
+   - One or two lines: what feature/change this is, in simple words.
+
+2. HOW IT WORKS (STEP BY STEP)
+   - Explain the flow in plain simple steps, like a story.
+   - Example: "When user clicks X button, this happens, then that 
+     happens, then this file runs, then output shows here."
+
+3. FILES CHANGED / CREATED
+   - List each file with ONE simple line: what that file does.
+
+4. IMPORTANT DECISIONS MADE
+   - Any assumption or choice I (the AI) made while coding, and why.
+
+5. WHAT'S NOT DONE YET / LIMITATIONS
+   - Be honest: what edge cases aren't handled, what's missing.
+
+6. HOW TO TEST THIS
+   - Simple steps to manually check if this feature works.
+
+Do not use complicated technical language. Write like you're 
+explaining to a beginner. Keep each section short — bullet points, 
+not paragraphs.
+
+Chhota version (agar quick chahiye, lambi prompt na likhni ho har baar)
+
+After this task, create UNDERSTANDING_[feature-name].md in root.
+Explain in very simple plain English: what was built, how it works 
+step-by-step, which files changed and why, what's not done yet, 
+and how to test it manually. No jargon — write for a beginner.

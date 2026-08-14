@@ -1,0 +1,273 @@
+/* shadow-character.css */
+
+/* Outer Production Mascot Container */
+.shadow-production-character {
+  position: fixed;
+  z-index: 9900;
+  width: 136px;
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  cursor: grab;
+  outline: none;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  animation: shadow-prod-float 3.4s ease-in-out infinite;
+}
+
+.shadow-production-character.is-inline {
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+}
+
+.shadow-production-character:active,
+.shadow-production-character.is-dragging {
+  cursor: grabbing;
+  animation-play-state: paused;
+}
+
+.shadow-production-character:focus-visible {
+  outline: 2px solid #00f0ff;
+  outline-offset: 4px;
+  border-radius: 14px;
+}
+
+/* Vector Master SVG Element */
+.shadow-master-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 16px rgba(139, 92, 246, 0.45)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.shadow-production-character:hover .shadow-master-svg,
+.shadow-production-character.is-hovered .shadow-master-svg {
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 22px rgba(168, 85, 247, 0.65)) drop-shadow(0 0 14px rgba(34, 211, 238, 0.5));
+}
+
+/* ================= INDEPENDENT LAYER RIGGING KEYFRAMES ================= */
+
+/* 1. Whole Character Floating */
+@keyframes shadow-prod-float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.008);
+  }
+}
+
+/* 2. Soft Grounding Floor Shadow Pulse */
+.shadow-grounding-shadow {
+  transform-origin: 160px 356px;
+  animation: shadow-grounding-pulse 3.4s ease-in-out infinite;
+}
+
+@keyframes shadow-grounding-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(0.88);
+    opacity: 0.35;
+  }
+}
+
+/* 3. Independent Head Tilt */
+.shadow-prod-head-group {
+  transform-origin: 160px 140px;
+  animation: shadow-head-tilt 4.4s ease-in-out infinite alternate;
+  transition: transform 0.3s ease;
+}
+
+@keyframes shadow-head-tilt {
+  0% {
+    transform: rotate(-1.5deg) translateY(0px);
+  }
+  100% {
+    transform: rotate(1.5deg) translateY(-1px);
+  }
+}
+
+/* 4. Independent Torso Breathing */
+.shadow-prod-torso-group {
+  transform-origin: 160px 240px;
+  animation: shadow-torso-breath 3.0s ease-in-out infinite alternate;
+}
+
+@keyframes shadow-torso-breath {
+  0% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1.018);
+  }
+}
+
+/* 5. Arms Micro Motion */
+.shadow-prod-left-arm {
+  transform-origin: 75px 168px;
+  animation: shadow-arm-left 3.8s ease-in-out infinite alternate;
+}
+
+.shadow-prod-right-arm {
+  transform-origin: 245px 168px;
+  animation: shadow-arm-right 3.8s ease-in-out infinite alternate;
+}
+
+@keyframes shadow-arm-left {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(2deg); }
+}
+
+@keyframes shadow-arm-right {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-2deg); }
+}
+
+/* ================= FACE SYSTEM SVG KEYFRAMES ================= */
+
+.shadow-face-system {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shadow-face-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.p-thinking-spinner {
+  transform-origin: 230px 125px;
+  animation: shadow-spin-hud 3.8s linear infinite;
+}
+
+@keyframes shadow-spin-hud {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.p-alert-pulse-ring {
+  transform-origin: 230px 125px;
+  animation: shadow-alert-ring-pulse 1.2s ease-in-out infinite alternate;
+}
+
+.p-alert-triangle {
+  animation: shadow-alert-flash 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes shadow-alert-ring-pulse {
+  0% { transform: scale(0.95); opacity: 0.45; }
+  100% { transform: scale(1.06); opacity: 0.95; }
+}
+
+@keyframes shadow-alert-flash {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.p-attention-ring {
+  transform-origin: 230px 125px;
+  animation: shadow-attention-flare 1.5s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate;
+}
+
+@keyframes shadow-attention-flare {
+  0% { transform: scale(0.92); opacity: 0.55; }
+  100% { transform: scale(1.08); opacity: 1; }
+}
+
+/* Equalizer Sound Waveform Bars */
+.p-vbar-1 { animation: vbar-pulse 0.4s ease-in-out infinite alternate; transform-origin: 179px 197px; }
+.p-vbar-2 { animation: vbar-pulse 0.5s ease-in-out 0.1s infinite alternate; transform-origin: 201px 197px; }
+.p-vbar-3 { animation: vbar-pulse 0.35s ease-in-out 0.05s infinite alternate; transform-origin: 230px 197px; }
+.p-vbar-4 { animation: vbar-pulse 0.48s ease-in-out 0.15s infinite alternate; transform-origin: 257px 197px; }
+.p-vbar-5 { animation: vbar-pulse 0.38s ease-in-out 0.2s infinite alternate; transform-origin: 279px 197px; }
+
+@keyframes vbar-pulse {
+  0% { transform: scaleY(0.3); opacity: 0.5; }
+  100% { transform: scaleY(1.35); opacity: 1; }
+}
+
+/* ZZZ text */
+.p-zzz { animation: p-zzz-float 2.5s ease-in-out infinite; }
+.p-zzz-2 { animation-delay: 1.2s; }
+
+@keyframes p-zzz-float {
+  0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+  50% { opacity: 0.9; }
+  100% { transform: translate(14px, -22px) scale(1.25); opacity: 0; }
+}
+
+/* Responsive Sizing Breakpoints */
+@media (max-width: 1024px) {
+  .shadow-production-character {
+    width: 120px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 640px) {
+  .shadow-production-character {
+    width: 96px;
+    height: 120px;
+  }
+}
+
+/* Accessibility / Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .shadow-production-character,
+  .shadow-grounding-shadow,
+  .shadow-prod-head-group,
+  .shadow-prod-torso-group,
+  .shadow-prod-left-arm,
+  .shadow-prod-right-arm {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ================= DIZZY SPINNING SHAKE ANIMATIONS ================= */
+.shadow-production-character.is-dizzy-spinning .shadow-prod-head-group {
+  transform-origin: 160px 100px !important;
+  animation: shadow-head-dizzy-spin 0.25s ease-in-out infinite alternate !important;
+  animation-play-state: running !important;
+}
+
+@keyframes shadow-head-dizzy-spin {
+  0% {
+    transform: rotate(-35deg) scale(1.15) translateY(-12px);
+  }
+  50% {
+    transform: rotate(0deg) scale(0.88) translateY(6px);
+  }
+  100% {
+    transform: rotate(35deg) scale(1.15) translateY(-12px);
+  }
+}
+
+.shadow-production-character.is-dizzy-spinning {
+  animation: shadow-dizzy-body-wobble 0.2s ease-in-out infinite alternate !important;
+  animation-play-state: running !important;
+}
+
+@keyframes shadow-dizzy-body-wobble {
+  0% {
+    transform: rotate(-12deg) scale(1.08);
+  }
+  100% {
+    transform: rotate(12deg) scale(0.92);
+  }
+}
+
+

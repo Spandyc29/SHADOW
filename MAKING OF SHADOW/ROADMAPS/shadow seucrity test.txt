@@ -1,0 +1,137 @@
+Haan 😤🥷 **ab asli final phase start hota hai: SHADOW ka security audit.** UI ban gaya, ab dekhna hai ki koi unauthorized user actual application/API level par kuch access ya manipulate toh nahi kar sakta.
+
+Main isko **OWASP WSTG + ASVS** style mein systematic test karunga. OWASP WSTG authentication, authorization, session management, input validation, business logic, client-side aur API testing ko cover karta hai; ASVS 5.0 bhi authentication, sessions, authorization, file handling, APIs, configuration, logging etc. ke verification areas deta hai. ([OWASP Foundation][1])
+
+### 🔥 SHADOW Security Test Plan
+
+**Phase 1 — Authentication**
+
+* Guest → protected pages
+* Logout ke baad protected API/page access
+* Invalid/expired session
+* Google OAuth flow, once enabled
+* Session/token handling
+* Direct URL access without login
+
+OWASP specifically direct access/forced browsing se authentication bypass test karne ko include karta hai. ([OWASP Foundation][2])
+
+**Phase 2 — Authorization / RLS 🔐**
+Ye SHADOW ke liye **sabse important** hai.
+
+Do test accounts:
+
+```text
+User A
+User B
+```
+
+Then verify:
+
+> User A **kabhi bhi User B ke scans, reports, files ya metadata** access nahi kar sakta.
+
+UI se nahi—**actual API requests/database policies** level par test karna hai. OWASP authorization testing specifically horizontal access/bypass aur IDOR jaise cases cover karta hai. ([OWASP Foundation][3])
+
+**Phase 3 — File Upload 🗂️**
+Tumhare SHADOW mein upload security critical hai.
+
+Test:
+
+* allowed extension handling
+* wrong MIME type
+* oversized file
+* filename edge cases
+* malformed files
+* archive handling
+* executable upload behavior
+* storage isolation
+* uploaded file direct execution/serving
+* guest upload limits
+
+OWASP WSTG explicitly unexpected/malicious file uploads ko business-logic testing ka part rakhta hai. ([OWASP Foundation][4])
+
+**Phase 4 — API Security**
+Har endpoint check:
+
+```text
+Authentication required?
+Authorization enforced?
+User ID trusted from token or request body?
+Object ownership checked?
+Unexpected fields accepted?
+Sensitive fields returned?
+Rate limits?
+```
+
+Especially **excessive data exposure** check karna important hai—API response mein UI se zyada sensitive information accidentally return nahi honi chahiye. ([OWASP Foundation][5])
+
+**Phase 5 — Input Validation**
+Safe test inputs ke through:
+
+* malformed JSON
+* unexpected types
+* very long strings
+* special characters
+* HTML/script-like input
+* invalid IDs
+* missing fields
+* duplicate requests
+
+Goal: application **reject/handle gracefully** kare, crash ya unintended behavior na ho.
+
+**Phase 6 — Session Security**
+Check:
+
+* logout actually invalidates session
+* expired session rejected
+* session doesn't leak into URL
+* cookies have appropriate security attributes
+* tokens aren't exposed unnecessarily
+* protected endpoints reject missing/invalid tokens
+
+OWASP WSTG session testing specifically cookies, fixation, exposed session variables, logout, timeout, JWTs and session hijacking areas cover karta hai. ([OWASP Foundation][4])
+
+**Phase 7 — Security Configuration**
+Check:
+
+* HTTPS in production
+* CORS
+* security headers
+* debug mode disabled
+* Swagger/docs exposure in production
+* secrets absent from frontend
+* `.env` not exposed
+* source maps not unnecessarily public
+* error responses don't leak stack traces
+
+OWASP's current WSTG configuration section includes HTTP methods, HSTS, cloud storage, CSP, path confusion and security-header misconfiguration testing. ([OWASP Foundation][4])
+
+### 🎯 SHADOW ke liye priority
+
+Main order ye rakhunga:
+
+```text
+🔴 P0  RLS / Authorization
+🔴 P0  Authentication / Session
+🔴 P0  File Upload
+🟠 P1  API Security
+🟠 P1  Input Validation
+🟠 P1  CORS / Security Headers
+🟡 P2  Error Handling / Information Leakage
+🟡 P2  Rate Limiting / Abuse Controls
+🟢 P3  UI / Client-side hardening
+```
+
+**Sabse pehle RLS test karte hain.** SHADOW ka biggest security question ye hai:
+
+> **“Can User A ever access User B's data by manipulating an API request?”**
+
+Agar iska answer solid **NO** hai, toh V1 security ke foundation kaafi strong direction mein hai. 😤🥷
+
+Aur ek rule: testing **sirf apne SHADOW deployment/local environment** par karna. Public third-party systems ko test nahi karna. OWASP WSTG bhi web-app security testing ke liye structured methodology provide karta hai. ([OWASP Foundation][6])
+
+[1]: https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/?utm_source=chatgpt.com "WSTG - Latest | OWASP Foundation"
+[2]: https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/04-Authentication_Testing/04-Testing_for_Bypassing_Authentication_Schema?utm_source=chatgpt.com "WSTG - Latest | OWASP Foundation"
+[3]: https://owasp.org/www-project-web-security-testing-guide/stable/4-Web_Application_Security_Testing/05-Authorization_Testing/?utm_source=chatgpt.com "WSTG - Stable | OWASP Foundation"
+[4]: https://owasp.org/www-project-web-security-testing-guide/latest/?utm_source=chatgpt.com "WSTG - Latest | OWASP Foundation"
+[5]: https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/12-API_Testing/03-Testing_for_Excessive_Data_Exposure?utm_source=chatgpt.com "WSTG - Latest | OWASP Foundation"
+[6]: https://owasp.org/www-project-web-security-testing-guide/?utm_source=chatgpt.com "OWASP Web Security Testing Guide | OWASP Foundation"

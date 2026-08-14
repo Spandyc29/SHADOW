@@ -1,0 +1,194 @@
+WHAT THEY DO . EVERTYHING ABOUT SHADOW - WITH EXPLAIN AND TIMELINE 
+
+TODAYS TASK (06-08-2026) - ADDING DOMAIN FUNCTION IN SHADOW 
+==================================================================================================================================================================================================================================
+
+==========================================================
+PROJECT SHADOW - ENGINEERING LOG
+==========================================================
+
+DATE
+06-08-2026
+
+MODULE
+Domain Intelligence V1
+
+STATUS
+🟨 In Progress
+
+==========================================================
+TODAY'S OBJECTIVE
+==========================================================
+
+Implement complete Domain Intelligence engine inside SHADOW.
+
+The goal is to allow analysts to investigate a domain name in the
+same way as Hash, File and URL investigations.
+
+The Domain module must integrate into the Universal Investigation
+Pipeline and produce the same Investigation Report structure.
+
+==========================================================
+TODAY'S TASKS
+==========================================================
+
+□ Create Domain module architecture
+
+□ Build Domain Validator
+
+□ Build WHOIS Service
+
+□ Build Domain Service
+
+□ Integrate VirusTotal Domain Intelligence
+
+□ Normalize Domain Response
+
+□ Connect Risk Engine
+
+□ Connect Confidence Engine
+
+□ Connect Recommendation Engine
+
+□ Create Domain Router
+
+□ Create Domain API
+
+□ Build Domain Analysis Page
+
+□ Integrate Universal Result UI
+
+□ Test complete investigation workflow
+
+==========================================================
+ARCHITECTURE DECISION
+==========================================================
+
+Every analyzer inside SHADOW follows the same pipeline.
+
+Input
+
+↓
+
+Validation
+
+↓
+
+Threat Intelligence
+
+↓
+
+Normalization
+
+↓
+
+Risk Engine
+
+↓
+
+Confidence Engine
+
+↓
+
+Recommendation Engine
+
+↓
+
+Universal Investigation Report
+
+The Domain module must follow this architecture exactly.
+
+==========================================================
+FILES TO CREATE
+==========================================================
+
+backend/
+
+services/domain/
+
+□ domain_validator.py
+
+□ whois_service.py
+
+□ domain_service.py
+
+routers/
+
+□ domain.py
+
+frontend/
+
+services/
+
+□ domainApi.js
+
+pages/
+
+□ DomainAnalysis.jsx
+
+==========================================================
+SUCCESS CRITERIA
+==========================================================
+
+User enters a domain
+
+↓
+
+Domain validated
+
+↓
+
+WHOIS collected
+
+↓
+
+VirusTotal lookup
+
+↓
+
+Risk calculated
+
+↓
+
+Confidence calculated
+
+↓
+
+Recommendation generated
+
+↓
+
+Universal Investigation Report displayed
+
+==========================================================
+NOTES
+==========================================================
+
+Reuse existing Risk, Confidence and Recommendation engines.
+
+Do NOT duplicate logic already used by Hash, File and URL modules.
+
+Universal Result UI should remain analyzer-independent.
+
+==========================================================
+NEXT TASK
+==========================================================
+
+TODAY'S TASK (06-08-2026) - DOMAIN INTELLIGENCE IN SHADOW
+
+✅ Completed Domain Intelligence V1.
+
+• Built complete Domain Analysis workflow.
+• Added domain validation and normalization.
+• Implemented WHOIS lookup and parser.
+• Added DNS resolution and DNS Records (A, AAAA, MX, NS, TXT, CAA, SOA).
+• Integrated VirusTotal Domain Intelligence.
+• Connected Risk Engine, Confidence Engine and Recommendation Engine.
+• Created dedicated Domain Intelligence report using the Universal Result UI.
+• Fixed duplicate WHOIS status values and improved data formatting.
+• Added Domain Age, Expiration Time, DNSSEC Status and Reputation Label.
+• Added Copy buttons, Show More for large records and better empty-state handling.
+• Performed final UI polish (spacing, badges, typography, card separation and consistency).
+
+Status:
+🟢 Domain Intelligence V1 Completed and ready for testing/freeze.

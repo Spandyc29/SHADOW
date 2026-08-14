@@ -1,0 +1,32 @@
+===============================================================
+SHADOW AI & MASCOT COMPANION - DAILY WORK LOG (10-08-2026)
+===============================================================
+
+1. VECTOR MASCOT CHARACTER RECONSTRUCTION:
+   - Built 100% SVG code-driven 2D Cyber-Ninja mascot (`ShadowCharacter.jsx`).
+   - Reconstructed broad shoulder pauldrons, cowl hood, graphite chest armor, cyber core reactor emblem, gauntlets, utility belt, kneepads, and combat boots with glowing cyan energy soles.
+   - Removed heavy 1.2MB PNG asset files (`SHADOW_Bot.png`) and legacy sprite components (`ShadowCompanion.jsx`).
+
+2. FLOATING WIDGET BEHAVIOR:
+   - Mounted globally at root level in `Layout.jsx` (`position: fixed`, `z-index: 9950`).
+   - Drag & drop with 5px movement threshold (separates drags from clicks).
+   - Viewport boundary clamping (`clampPosition`).
+   - Position persistence in `localStorage` (`shadow-companion-position`).
+   - 14 production expression states, continuous idle float, torso breathing, head tilt, micro-blinking, and cursor eye-tracking.
+
+3. SHADOW AI CHAT PANEL (PHASE 2 & PHASE 3):
+   - Created right-side sliding glassmorphism chat panel (`ShadowChatPanel.jsx` & `shadow-chat-panel.css`).
+   - Prominently displays mandatory non-dismissible disclaimer:
+     "Shadow AI explains — it does not decide. Verdicts come from SHADOW's Risk Engine."
+   - Injected scan context from `/report-preview`, `/upload`, `/scan/:id` (`ScanContext.jsx`).
+   - Mascot switches to `THINKING` state while processing AI queries.
+
+4. FASTAPI BACKEND PROXY & GUARDRAILS:
+   - Created `backend/routers/shadow_ai.py` (`POST /api/shadow-ai/chat`).
+   - Configured server-side `GROQ_API_KEY` (`backend/.env` & `config.py`).
+   - Layer 1 System Prompt + Layer 2 Response Filter (intercepts verdict statements and redirects queries to SHADOW's Risk Engine).
+
+5. BUILD & VERIFICATION:
+   - `npm run build` executed cleanly in 1.58s with 0 errors.
+   - All tests passed.
+===============================================================

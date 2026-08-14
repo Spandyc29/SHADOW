@@ -1,0 +1,181 @@
+/* experimental-shadow.css */
+
+/* Outer Experimental Prototype Container */
+.experimental-shadow-container {
+  position: relative;
+  width: 220px;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  cursor: grab;
+  outline: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  animation: exp-shadow-float 3.5s ease-in-out infinite;
+}
+
+.experimental-shadow-container:active,
+.experimental-shadow-container.is-dragging {
+  cursor: grabbing;
+  animation-play-state: paused;
+}
+
+.experimental-shadow-container:focus-visible {
+  outline: 2px solid #00f0ff;
+  outline-offset: 6px;
+  border-radius: 16px;
+}
+
+/* Base Vector SVG */
+.experimental-shadow-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 16px rgba(139, 92, 246, 0.45)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.experimental-shadow-container:hover .experimental-shadow-svg,
+.experimental-shadow-container.is-hovered .experimental-shadow-svg {
+  filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 22px rgba(168, 85, 247, 0.65)) drop-shadow(0 0 14px rgba(34, 211, 238, 0.5));
+}
+
+/* ================= INDEPENDENT RIGGED ANIMATIONS ================= */
+
+/* 1. Entire Character Float */
+@keyframes exp-shadow-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* 2. Independent Head Tilt (Pivot from neck: x=150, y=140) */
+.exp-head-group {
+  transform-origin: 150px 140px;
+  animation: exp-head-tilt 4.2s ease-in-out infinite alternate;
+}
+
+@keyframes exp-head-tilt {
+  0% {
+    transform: rotate(-1.8deg) translateY(0px);
+  }
+  100% {
+    transform: rotate(1.8deg) translateY(-1px);
+  }
+}
+
+/* 3. Independent Torso Breathing (Pivot from waist: x=150, y=240) */
+.exp-torso-group {
+  transform-origin: 150px 240px;
+  animation: exp-torso-breath 3.0s ease-in-out infinite alternate;
+}
+
+@keyframes exp-torso-breath {
+  0% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(1.025);
+  }
+}
+
+/* 4. Independent Scarf Sway (Pivot from neck scarf knot: x=150, y=155) */
+.exp-scarf-tail {
+  transform-origin: 150px 155px;
+  animation: exp-scarf-sway 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes exp-scarf-sway {
+  0% {
+    transform: rotate(-4deg) skewX(-2deg);
+  }
+  100% {
+    transform: rotate(5deg) skewX(3deg);
+  }
+}
+
+/* 5. Independent Arm Movement */
+.exp-left-arm {
+  transform-origin: 90px 165px;
+  animation: exp-arm-left 3.6s ease-in-out infinite alternate;
+}
+
+.exp-right-arm {
+  transform-origin: 210px 165px;
+  animation: exp-arm-right 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes exp-arm-left {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(2.5deg);
+  }
+}
+
+@keyframes exp-arm-right {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-2.5deg);
+  }
+}
+
+/* 6. Reticle & HUD Keyframes inside Screen */
+.exp-thinking-spinner {
+  transform-origin: 150px 85px;
+  animation: exp-spin-hud 3.8s linear infinite;
+}
+
+@keyframes exp-spin-hud {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.exp-alert-pulse {
+  transform-origin: 150px 85px;
+  animation: exp-pulse-ring 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes exp-pulse-ring {
+  0% { transform: scale(0.94); opacity: 0.5; }
+  100% { transform: scale(1.08); opacity: 0.95; }
+}
+
+/* Waveform Bars */
+.exp-vbar-1 { animation: vbar-pulse 0.4s ease-in-out infinite alternate; transform-origin: 122px 125px; }
+.exp-vbar-2 { animation: vbar-pulse 0.5s ease-in-out 0.1s infinite alternate; transform-origin: 136px 125px; }
+.exp-vbar-3 { animation: vbar-pulse 0.35s ease-in-out 0.05s infinite alternate; transform-origin: 150px 125px; }
+.exp-vbar-4 { animation: vbar-pulse 0.48s ease-in-out 0.15s infinite alternate; transform-origin: 164px 125px; }
+.exp-vbar-5 { animation: vbar-pulse 0.38s ease-in-out 0.2s infinite alternate; transform-origin: 178px 125px; }
+
+/* ZZZ text */
+.exp-zzz { animation: exp-zzz-float 2.5s ease-in-out infinite; }
+.exp-zzz-2 { animation-delay: 1.2s; }
+
+@keyframes exp-zzz-float {
+  0% { transform: translate(0, 0) scale(0.8); opacity: 0; }
+  50% { opacity: 0.9; }
+  100% { transform: translate(12px, -20px) scale(1.2); opacity: 0; }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .experimental-shadow-container,
+  .exp-head-group,
+  .exp-torso-group,
+  .exp-scarf-tail,
+  .exp-left-arm,
+  .exp-right-arm {
+    animation: none;
+    transition: none;
+  }
+}
