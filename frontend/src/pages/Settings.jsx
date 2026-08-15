@@ -170,7 +170,7 @@ function Settings() {
     user?.user_metadata?.display_name ||
     (user?.email ? user.email.split("@")[0] : isGuest ? "Guest User" : "Security Operative");
 
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "https://shadow-581b.onrender.com";
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || "https://shadow-58lb.onrender.com";
 
   return (
     <div className="settings-container">

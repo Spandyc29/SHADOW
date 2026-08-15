@@ -2,7 +2,7 @@ import axios from "axios";
 import { supabase } from "../supabaseClient";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "https://shadow-581b.onrender.com",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "https://shadow-58lb.onrender.com",
 });
 
 // Har request mein token automatically add hoga
