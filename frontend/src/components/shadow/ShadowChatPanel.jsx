@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import { useScanContext } from '../../context/ScanContext';
 import { shadowStateController } from './ShadowStateController';
 import { SHADOW_STATES } from './ShadowConstants';
@@ -53,7 +53,7 @@ export default function ShadowChatPanel({ isOpen, onClose }) {
     shadowStateController.setState(SHADOW_STATES.THINKING, true);
 
     try {
-      const response = await axios.post('http://localhost:8000/api/shadow-ai/chat', {
+      const response = await api.post('/api/shadow-ai/chat', {
         message: trimmed,
         scanContext: scanContext || null,
       });

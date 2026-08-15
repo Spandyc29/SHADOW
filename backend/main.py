@@ -33,6 +33,7 @@ async def add_security_headers(request: Request, call_next):
 allowed_origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://shadowcti.netlify.app",
 ]
 if config.FRONTEND_URL and config.FRONTEND_URL not in allowed_origins:
     allowed_origins.append(config.FRONTEND_URL)

@@ -3,6 +3,7 @@ venv\Scripts\python -m uvicorn main:app --reload
 
 GROQ_API_KEY=stored in backend/.env
 
+URL https://shadow-58lb.onrender.com
 
 
 **LOCKED. 🔒**
