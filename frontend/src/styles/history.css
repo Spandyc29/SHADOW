@@ -764,21 +764,125 @@
   }
 }
 
+@media (max-width: 1023px) {
+  .history-page {
+    padding: 24px 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .history-page {
-    padding: 20px 16px;
+    padding: 16px 14px;
   }
+
   .history-stats-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
+
+  .history-stats-grid .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 14px 16px;
+    border-radius: 14px;
+    gap: 6px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .history-stats-grid .stat-icon-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    margin-bottom: 2px;
+  }
+
+  .history-stats-grid .stat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .history-stats-grid .stat-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .history-stats-grid .stat-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 3px 0;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .history-stats-grid .stat-trend {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-align: center;
+    word-break: break-word;
+  }
+
   .history-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
   }
+
+  .history-header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.06em;
+  }
+
+  .history-header .subtitle {
+    font-size: 0.82rem;
+    margin-top: 4px;
+  }
+
   .header-controls {
     width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
+
   .search-bar-wrapper {
     width: 100%;
+    min-width: 0;
+  }
+
+  .filter-dropdown-wrapper,
+  .date-dropdown-wrapper {
+    width: 100%;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .filter-select,
+  .date-select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .history-pagination-bar {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
   }
 }

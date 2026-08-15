@@ -210,3 +210,30 @@
 .mock-toggle.checked .toggle-handle {
   transform: translateX(22px);
 }
+
+/* ================= RESPONSIVE BREAKPOINTS ================= */
+@media (max-width: 1023px) {
+  .settings-container {
+    padding: 24px 20px 40px 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .settings-container {
+    padding: 16px 14px 32px 14px;
+  }
+  .settings-header {
+    margin-bottom: 20px;
+  }
+  .settings-header h1 {
+    font-size: 1.5rem;
+  }
+  .settings-card {
+    padding: 18px 14px;
+  }
+  .profile-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

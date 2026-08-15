@@ -107,7 +107,7 @@ function ThreatActivityChart({ stats }) {
       </div>
 
       {/* LEGEND BELOW */}
-      <div className="flex items-center justify-center gap-6 mt-3 pt-3 border-t border-slate-800/80 text-xs font-semibold">
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-3 pt-3 border-t border-slate-800/80 text-xs font-semibold">
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
           <span className="text-slate-300">Threats</span>

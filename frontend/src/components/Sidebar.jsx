@@ -1,26 +1,40 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { LayoutDashboard, UploadCloud, History, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, UploadCloud, History, Settings, LogOut, X } from "lucide-react";
 import "../styles/sidebar.css";
 
-function Sidebar() {
+function Sidebar({ isOpen = false, onClose }) {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isGuest, logout } = useAuth();
 
   const handleLogoutAction = async () => {
     if (window.confirm("Terminate SHADOW terminal session?")) {
+      onClose?.();
       await logout();
       navigate("/login");
     }
   };
 
+  const handleLinkClick = () => {
+    onClose?.();
+  };
+
   const isActive = (path) => (location.pathname === path ? "active" : "");
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? "mobile-open" : ""}`}>
       {/* SHADOW BRANDING HEADER */}
       <div className="sidebar-brand">
+        <button
+          type="button"
+          className="sidebar-close-btn"
+          onClick={onClose}
+          aria-label="Close Mobile Navigation"
+        >
+          <X size={20} />
+        </button>
+
         <div className="hexagon-logo-wrapper">
           <svg viewBox="0 0 60 60" className="hexagon-logo-svg">
             <polygon
@@ -52,19 +66,19 @@ function Sidebar() {
 
       {/* NAVIGATION ITEMS */}
       <nav className="nav-links">
-        <Link to="/dashboard" className={`nav-item ${isActive("/dashboard")}`}>
+        <Link to="/dashboard" className={`nav-item ${isActive("/dashboard")}`} onClick={handleLinkClick}>
           <LayoutDashboard size={20} className="nav-icon" />
           <span>Dashboard</span>
         </Link>
-        <Link to="/upload" className={`nav-item ${isActive("/upload")}`}>
+        <Link to="/upload" className={`nav-item ${isActive("/upload")}`} onClick={handleLinkClick}>
           <UploadCloud size={20} className="nav-icon" />
           <span>Upload Scan</span>
         </Link>
-        <Link to="/history" className={`nav-item ${isActive("/history")}`}>
+        <Link to="/history" className={`nav-item ${isActive("/history")}`} onClick={handleLinkClick}>
           <History size={20} className="nav-icon" />
           <span>Scan History</span>
         </Link>
-        <Link to="/settings" className={`nav-item ${isActive("/settings")}`}>
+        <Link to="/settings" className={`nav-item ${isActive("/settings")}`} onClick={handleLinkClick}>
           <Settings size={20} className="nav-icon" />
           <span>Settings</span>
         </Link>
@@ -92,7 +106,10 @@ function Sidebar() {
         </p>
         <button
           type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent('shadow-open-chat'))}
+          onClick={() => {
+            onClose?.();
+            window.dispatchEvent(new CustomEvent('shadow-open-chat'));
+          }}
           className="btn-sidebar-ask-ai"
         >
           Ask SHADOW AI
@@ -108,11 +125,11 @@ function Sidebar() {
           </button>
         ) : (
           <div className="guest-footer-panel">
-            <Link to="/login" className="btn-sidebar-auth primary">
+            <Link to="/login" className="btn-sidebar-auth primary" onClick={handleLinkClick}>
               Sign In
             </Link>
             <div className="auth-panel-divider" />
-            <Link to="/register" className="btn-sidebar-auth secondary">
+            <Link to="/register" className="btn-sidebar-auth secondary" onClick={handleLinkClick}>
               Register
             </Link>
           </div>

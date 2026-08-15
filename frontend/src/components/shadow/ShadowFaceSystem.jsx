@@ -29,7 +29,7 @@ export default function ShadowFaceSystem({
   const effectiveBlink = isBlinking || isSleeping;
 
   // Compute eye displacement transform string from eyeOffset
-  const eyeTransform = `translate(${eyeOffset.x || 0}px, ${eyeOffset.y || 0}px)`;
+  const eyeTransform = `translate(${eyeOffset.x || 0}, ${eyeOffset.y || 0})`;
 
   return (
     <div className={`shadow-face-system state-${state}`}>
