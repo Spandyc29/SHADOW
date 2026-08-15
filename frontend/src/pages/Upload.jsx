@@ -193,6 +193,14 @@ function Upload() {
     const meta = buildMetadata(payload, analysis, submitted, type);
     const scanId = payload?.scan_id || payload?.id || analysis?.scan_id || meta.scanId;
 
+    console.log("[SHADOW Guest Flow Debug] handleAnalysisResponse:", {
+      isGuest,
+      type,
+      submitted,
+      scanId,
+      payload,
+    });
+
     setMetadata({
       ...meta,
       basicProperties: buildBasicProperties(payload, analysis, meta),
@@ -224,7 +232,10 @@ function Upload() {
     }
 
     if (scanId) {
-      navigate(`/upload/result/${scanId}`);
+      console.log("[SHADOW Guest Flow Debug] Navigating to /upload/result/" + scanId + " with state.scanData");
+      navigate(`/upload/result/${scanId}`, {
+        state: { scanData: payload },
+      });
     } else {
       setResult(analysis);
     }

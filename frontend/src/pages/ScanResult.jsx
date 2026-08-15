@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import AnalysisResult from "../components/analysis/AnalysisResult";
 import { getScan } from "../services/api";
 import { useAuth } from "../context/AuthContext";
@@ -19,7 +19,7 @@ function getFileTypeName(value) {
 export function parseAndMergeScanData(scanData) {
   if (!scanData) return null;
 
-  // 1. Defensively parse vt_raw
+  // 1. Defensively parse vt_raw or nested result payload
   let vtRawObj = {};
   if (scanData.vt_raw) {
     if (typeof scanData.vt_raw === "string") {
@@ -32,6 +32,10 @@ export function parseAndMergeScanData(scanData) {
     } else if (typeof scanData.vt_raw === "object") {
       vtRawObj = scanData.vt_raw;
     }
+  } else if (scanData.result && typeof scanData.result === "object") {
+    vtRawObj = scanData.result;
+  } else {
+    vtRawObj = scanData;
   }
 
   // 2. Extract nested analysis payload if present
@@ -41,8 +45,21 @@ export function parseAndMergeScanData(scanData) {
   const fivew1h = report.fivew1h || {};
 
   // 3. Fallbacks for verdict / severity / risk metrics
-  const detections = scanData.vt_detections ?? rawPayload.detections ?? rawPayload.positives ?? attrs.last_analysis_stats?.malicious ?? 0;
-  const totalEngines = scanData.vt_total_engines ?? rawPayload.total_engines ?? rawPayload.usable_engines ?? rawPayload.total ?? 90;
+  const detections =
+    scanData.vt_detections ??
+    scanData.virustotal_summary?.detections ??
+    rawPayload.detections ??
+    rawPayload.positives ??
+    attrs.last_analysis_stats?.malicious ??
+    0;
+
+  const totalEngines =
+    scanData.vt_total_engines ??
+    scanData.virustotal_summary?.total_engines ??
+    rawPayload.total_engines ??
+    rawPayload.usable_engines ??
+    rawPayload.total ??
+    90;
 
   const getFallbackVerdict = (dets) => {
     if (dets === 0) return "CLEAN";
@@ -96,13 +113,15 @@ export function parseAndMergeScanData(scanData) {
     rawPayload.first_seen ||
     attrs.first_submission_date ||
     attrs.first_seen ||
-    scanData.created_at;
+    scanData.created_at ||
+    scanData.scanned_at;
 
   const lastAnalysis =
     rawPayload.last_analysis ||
     rawPayload.last_analysis_date ||
     attrs.last_analysis_date ||
-    scanData.created_at;
+    scanData.created_at ||
+    scanData.scanned_at;
 
   // Community Reputation
   const communityReputation =
@@ -146,28 +165,33 @@ export function parseAndMergeScanData(scanData) {
   }
 
   // Basic File / Hash / Indicator Properties
-  const meaningfulName =
+  const fileName =
+    scanData.file_name ||
+    scanData.metadata?.file_name ||
     rawPayload.meaningful_name ||
-    attrs.meaningful_name ||
-    scanData.file_name;
+    rawPayload.file_name ||
+    rawPayload.indicator ||
+    attrs.meaningful_name;
 
   const rawAssociated =
     rawPayload.associated_names ||
     attrs.names ||
-    (scanData.file_name ? [scanData.file_name] : []);
+    (fileName ? [fileName] : []);
 
   const associatedNames = Array.isArray(rawAssociated) ? rawAssociated : [rawAssociated];
 
   const fileType =
     rawPayload.file_type ||
+    scanData.file_type ||
     attrs.type_description ||
     attrs.type_tag ||
     scanData.analysis_type;
 
   const fileSize =
     rawPayload.file_size ||
-    attrs.size ||
-    scanData.file_size;
+    scanData.file_size ||
+    scanData.metadata?.file_size ||
+    attrs.size;
 
   // Flagged Engines
   let flaggedEngines = rawPayload.flagged_engines || [];
@@ -210,16 +234,20 @@ export function parseAndMergeScanData(scanData) {
 
   // Permalink
   const permalink = scanData.vt_permalink || rawPayload.permalink || attrs.permalink || rawPayload.gui_link;
+  const analysisType = scanData.analysis_type || rawPayload.analysis_type || rawPayload.indicator_type || "file";
+  const scanId = scanData.id || scanData.scan_id;
+  const createdAt = scanData.created_at || scanData.scanned_at || rawPayload.created_at;
+  const hashes = rawPayload.hashes || scanData.hashes || { md5: scanData.md5, sha1: scanData.sha1, sha256: scanData.sha256 };
 
   // Merge top-level DB columns with rawPayload into ONE unified object matching AnalysisResult expected shape
   const mergedAnalysis = {
     ...rawPayload,
-    indicator: scanData.file_name || rawPayload.indicator || rawPayload.file_name || rawPayload.url || rawPayload.domain || rawPayload.ip,
-    file_name: scanData.file_name || rawPayload.file_name,
-    indicator_type: scanData.analysis_type || rawPayload.indicator_type || rawPayload.analysis_type || "file",
-    analysis_type: scanData.analysis_type || rawPayload.analysis_type || rawPayload.indicator_type || "file",
-    scan_id: scanData.id || scanData.scan_id,
-    created_at: scanData.created_at || scanData.scanned_at,
+    indicator: fileName || rawPayload.indicator || rawPayload.url || rawPayload.domain || rawPayload.ip,
+    file_name: fileName,
+    indicator_type: analysisType,
+    analysis_type: analysisType,
+    scan_id: scanId,
+    created_at: createdAt,
 
     verdict: verdict,
     severity: severity,
@@ -252,7 +280,7 @@ export function parseAndMergeScanData(scanData) {
     threat_categories: threatCategories,
     categories: threatCategories,
 
-    meaningful_name: meaningfulName,
+    meaningful_name: fileName,
     associated_names: associatedNames,
     file_type: fileType,
     file_size: fileSize,
@@ -260,8 +288,8 @@ export function parseAndMergeScanData(scanData) {
     risk_factors: rawPayload.risk_factors || [],
     confidence_factors: rawPayload.confidence_factors || [],
 
-    ip_info: rawPayload.ip_info || (scanData.analysis_type === "ip" ? {
-      ip: scanData.file_name,
+    ip_info: rawPayload.ip_info || (analysisType === "ip" ? {
+      ip: fileName,
       version: attrs.ip_version || "v4",
       asn: attrs.asn,
       as_owner: attrs.as_owner,
@@ -271,7 +299,7 @@ export function parseAndMergeScanData(scanData) {
     } : undefined),
     url_info: rawPayload.url_info,
     domain_info: rawPayload.domain_info,
-    hashes: rawPayload.hashes || { md5: scanData.md5, sha1: scanData.sha1, sha256: scanData.sha256 },
+    hashes: hashes,
   };
 
   return mergedAnalysis;
@@ -281,6 +309,7 @@ export function buildMetadataFromScan(scanData, mergedAnalysis) {
   const type = (scanData.analysis_type || mergedAnalysis.analysis_type || mergedAnalysis.indicator_type || "file").toLowerCase();
   const submitted =
     scanData.file_name ||
+    scanData.metadata?.file_name ||
     mergedAnalysis.indicator ||
     mergedAnalysis.file_name ||
     mergedAnalysis.url ||
@@ -342,12 +371,13 @@ export function buildBasicPropertiesFromScan(scanData, meta) {
   const analysis = meta.analysis;
 
   if (meta.analysisType === "file") {
-    const hashes = analysis.hashes || {};
+    const hashes = analysis.hashes || scanData.hashes || {};
+    const metadata = scanData.metadata || {};
     return [
-      { label: "File Name", value: scanData.file_name || analysis.file_name || meta.indicatorValue },
-      { label: "File Size", value: scanData.file_size || analysis.file_size },
+      { label: "File Name", value: scanData.file_name || metadata.file_name || analysis.file_name || meta.indicatorValue },
+      { label: "File Size", value: scanData.file_size || metadata.file_size || analysis.file_size },
       { label: "File Type", value: getFileTypeName(analysis.file_type || scanData.file_type) },
-      { label: "MIME Type", value: scanData.mime_type || analysis.mime_type },
+      { label: "MIME Type", value: scanData.mime_type || metadata.mime_type || analysis.mime_type },
       { label: "MD5", value: scanData.md5 || hashes.md5 || analysis.md5 },
       { label: "SHA1", value: scanData.sha1 || hashes.sha1 || analysis.sha1 },
       { label: "SHA256", value: scanData.sha256 || hashes.sha256 || analysis.sha256 },
@@ -397,15 +427,40 @@ export function buildBasicPropertiesFromScan(scanData, meta) {
 function ScanResult() {
   const { scanId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
 
-  const [scanData, setScanData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const preloadedScanData = location.state?.scanData || location.state?.result;
+  const isGuestTmpScan = scanId?.startsWith("guest_tmp_");
+
+  console.log("[SHADOW Guest Flow Debug] ScanResult mount:", {
+    scanId,
+    isGuestTmpScan,
+    hasLocationState: Boolean(location.state),
+    preloadedScanData,
+  });
+
+  const [scanData, setScanData] = useState(preloadedScanData || null);
+  const [loading, setLoading] = useState(!preloadedScanData);
   const [error, setError] = useState("");
 
   const fetchScanResult = useCallback(async () => {
     if (!scanId) {
       setError("No scan ID specified.");
+      setLoading(false);
+      return;
+    }
+
+    if (preloadedScanData) {
+      console.log("[SHADOW Guest Flow Debug] Using preloadedScanData directly, bypassing GET /scans/", scanId);
+      setScanData(preloadedScanData);
+      setLoading(false);
+      return;
+    }
+
+    if (isGuestTmpScan) {
+      console.log("[SHADOW Guest Flow Debug] guest_tmp scan with no preloaded state. Rendering guest notice.");
+      setError("guest_tmp_expired");
       setLoading(false);
       return;
     }
@@ -431,7 +486,7 @@ function ScanResult() {
     } finally {
       setLoading(false);
     }
-  }, [scanId]);
+  }, [scanId, preloadedScanData, isGuestTmpScan]);
 
   useEffect(() => {
     fetchScanResult();
@@ -441,6 +496,28 @@ function ScanResult() {
     return (
       <div className="upload-page result-page" style={{ padding: "2rem" }}>
         <p style={{ color: "#94a3b8" }}>Loading scan result...</p>
+      </div>
+    );
+  }
+
+  if (error === "guest_tmp_expired" || (isGuestTmpScan && !scanData)) {
+    return (
+      <div className="upload-page result-page" style={{ padding: "2rem" }}>
+        <div style={{ maxWidth: "560px", margin: "2rem auto", textAlign: "center", backgroundColor: "#1e293b", borderRadius: "16px", padding: "2rem", border: "1px solid #334155" }}>
+          <h3 style={{ color: "#f59e0b", fontSize: "1.2rem", fontWeight: "700", marginBottom: "0.75rem" }}>
+            Temporary Guest Scan Result
+          </h3>
+          <p style={{ color: "#94a3b8", fontSize: "0.875rem", lineHeight: "1.6", marginBottom: "1.5rem" }}>
+            Guest Operator scan results are temporary and are not saved after navigating away or refreshing the session. Please perform a new scan or log in for persistent scan history.
+          </p>
+          <Link
+            to="/upload"
+            className="upload-btn"
+            style={{ textDecoration: "none", display: "inline-block", textAlign: "center" }}
+          >
+            Back to Upload
+          </Link>
+        </div>
       </div>
     );
   }
