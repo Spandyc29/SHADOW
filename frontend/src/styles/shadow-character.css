@@ -270,4 +270,13 @@
   }
 }
 
+/* ================= EXPORT & PRINT EXCLUSION ================= */
+@media print {
+  .pdf-exclude,
+  .shadow-production-character,
+  .shadow-chat-panel-overlay {
+    display: none !important;
+  }
+}
+
 

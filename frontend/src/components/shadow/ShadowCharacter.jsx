@@ -315,7 +315,8 @@ export default function ShadowCharacter({
     <>
       <div
         ref={containerRef}
-        className={`shadow-production-character ${isDraggingState ? 'is-dragging' : ''} ${isHovered ? 'is-hovered' : ''} ${isDizzy ? 'is-dizzy-spinning' : ''} ${className}`}
+        className={`shadow-production-character ${isDraggingState ? 'is-dragging' : ''} ${isHovered ? 'is-hovered' : ''} ${isDizzy ? 'is-dizzy-spinning' : ''} ${className} pdf-exclude no-print`.trim()}
+        data-html2canvas-ignore="true"
         style={
           enableDragging
             ? {

@@ -97,7 +97,7 @@ export default function ShadowChatPanel({ isOpen, onClose }) {
   };
 
   return (
-    <div className={`shadow-chat-panel-overlay ${isOpen ? 'is-open' : ''}`}>
+    <div className={`shadow-chat-panel-overlay ${isOpen ? 'is-open' : ''} pdf-exclude no-print`} data-html2canvas-ignore="true">
       {/* Header */}
       <div className="shadow-chat-header">
         <div className="shadow-chat-brand">
