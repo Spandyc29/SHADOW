@@ -84,6 +84,14 @@ class ExecutiveSummaryGenerator:
         except (ValueError, TypeError):
             risk_score = 0
 
+        risk_max = (
+            raw_risk.get("risk_max")
+            or raw_risk.get("max_score")
+            or data.get("risk_max")
+            or data.get("max_score")
+            or 90
+        )
+
         raw_risk_level = raw_risk.get("level") or data.get("severity") or data.get("risk_level")
         if not raw_risk_level:
             if risk_score >= 80:
@@ -151,7 +159,7 @@ class ExecutiveSummaryGenerator:
                 f"The submitted {file_type_label} artifact '{file_name}' was analyzed by the SHADOW investigation pipeline."
             )
             sentences.append(
-                f"The sample was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/100) and {confidence_level} Confidence ({confidence_score}/100)."
+                f"The sample was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/{risk_max}) and {confidence_level} Confidence ({confidence_score}/100)."
             )
             if detections > 0:
                 t_info = f" labeled as '{threat_label}'" if threat_label else ""
@@ -183,7 +191,7 @@ class ExecutiveSummaryGenerator:
                     f"The cryptographic file hash '{raw_hash}' was evaluated against the SHADOW threat intelligence database."
                 )
             sentences.append(
-                f"The hash was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/100) and {confidence_level} Confidence ({confidence_score}/100)."
+                f"The hash was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/{risk_max}) and {confidence_level} Confidence ({confidence_score}/100)."
             )
             if detections > 0:
                 t_info = f" labeled as '{threat_label}'" if threat_label else ""
@@ -210,7 +218,7 @@ class ExecutiveSummaryGenerator:
                 f"The submitted web URL '{raw_url}' was analyzed by the SHADOW web security investigation pipeline."
             )
             sentences.append(
-                f"The URL target was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/100) and {confidence_level} Confidence ({confidence_score}/100)."
+                f"The URL target was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/{risk_max}) and {confidence_level} Confidence ({confidence_score}/100)."
             )
             if detections > 0:
                 sentences.append(
@@ -239,7 +247,7 @@ class ExecutiveSummaryGenerator:
                 f"The registered domain '{raw_domain}' was evaluated by the SHADOW network intelligence engine."
             )
             sentences.append(
-                f"The domain was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/100) and {confidence_level} Confidence ({confidence_score}/100)."
+                f"The domain was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/{risk_max}) and {confidence_level} Confidence ({confidence_score}/100)."
             )
             if resolved_ip:
                 isp_info = f" ({isp})" if isp else ""
@@ -269,7 +277,7 @@ class ExecutiveSummaryGenerator:
                 f"The network IP address '{raw_ip}' was analyzed for security risk and threat intelligence indicators."
             )
             sentences.append(
-                f"The host was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/100) and {confidence_level} Confidence ({confidence_score}/100)."
+                f"The host was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/{risk_max}) and {confidence_level} Confidence ({confidence_score}/100)."
             )
             if isp:
                 loc_info = f" ({country})" if country and country != "Not Applicable" else ""
@@ -295,7 +303,7 @@ class ExecutiveSummaryGenerator:
                 f"The security target was analyzed by the SHADOW investigation pipeline."
             )
             sentences.append(
-                f"The target was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/100) and {confidence_level} Confidence ({confidence_score}/100)."
+                f"The target was classified as {verdict} with a {risk_level} Risk Score ({risk_score}/{risk_max}) and {confidence_level} Confidence ({confidence_score}/100)."
             )
             sentences.append("Standard security monitoring applies.")
 
@@ -306,7 +314,7 @@ class ExecutiveSummaryGenerator:
         # --------------------------------------------------
         findings = [
             f"Verdict: {verdict}",
-            f"Risk Level: {risk_level} (Score: {risk_score}/100)",
+            f"Risk Level: {risk_level} (Score: {risk_score}/{risk_max})",
             f"Confidence: {confidence_level} (Score: {confidence_score}/100)",
         ]
 

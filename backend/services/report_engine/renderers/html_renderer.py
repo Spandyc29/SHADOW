@@ -71,6 +71,7 @@ class HTMLRenderer:
             return "".join(items_html)
 
         risk_score = f5.why.get("risk_score", 0)
+        risk_max = f5.why.get("risk_max", 90)
         risk_level = str(f5.why.get("risk_level", "LOW")).upper()
         confidence_score = f5.why.get("confidence_score", 0)
         confidence_level = str(f5.why.get("confidence_level", "NEUTRAL")).upper()
@@ -305,7 +306,7 @@ class HTMLRenderer:
             </div>
             <div class="metric-card">
                 <div class="metric-label">Risk Score</div>
-                <div class="metric-value">{escape(risk_score)} / 100</div>
+                <div class="metric-value">{escape(risk_score)} / {escape(risk_max)}</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Confidence Score</div>

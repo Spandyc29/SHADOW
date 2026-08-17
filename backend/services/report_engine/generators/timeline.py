@@ -48,6 +48,7 @@ class TimelineGenerator:
         verdict = str(data.get("verdict") or raw_risk.get("classification") or "unclassified").upper()
         severity = str(raw_risk.get("level") or data.get("severity") or data.get("risk_level") or "low").upper()
         risk_score = raw_risk.get("score", data.get("risk_score", 0))
+        risk_max = raw_risk.get("risk_max") or raw_risk.get("max_score") or data.get("risk_max") or data.get("max_score") or 90
 
         confidence_score = raw_confidence.get("score", data.get("confidence_score", 0))
         confidence = str(raw_confidence.get("level") or data.get("confidence") or "neutral").upper()
@@ -125,7 +126,7 @@ class TimelineGenerator:
         raw_events.append({
             "title": "Risk Engine Evaluation",
             "timestamp": scan_ts,
-            "description": f"Calculated Risk Score ({risk_score}/100) with Verdict '{verdict}' and Severity '{severity}'."
+            "description": f"Calculated Risk Score ({risk_score}/{risk_max}) with Verdict '{verdict}' and Severity '{severity}'."
         })
 
         # --------------------------------------------------

@@ -85,25 +85,29 @@ def apply_guardrail_filter(text: str, scan_context: Optional[Dict[str, Any]] = N
     if scan_context:
         auth_risk = scan_context.get("risk_score")
         auth_conf = scan_context.get("confidence_score")
-        risk_max = scan_context.get("risk_max") or scan_context.get("max_score") or 100
+        risk_max = scan_context.get("risk_max") or scan_context.get("max_score") or 90
 
         # Match X/100 or X/90 patterns in text when discussing risk or confidence score
         score_matches = re.findall(r"\b(\d{1,3})\s*/\s*(\d{1,2}|100)\b", text)
         for val, scale in score_matches:
             val_num = int(val)
             scale_num = int(scale)
-            # If standard score scale (90 or 100) and doesn't match authoritative risk or confidence score
-            if scale_num in (90, 100):
-                if auth_risk is not None and val_num != int(auth_risk) and (auth_conf is None or val_num != int(auth_conf)):
-                    # Allow 0/X if 0 detections or 0 score
-                    if val_num != 0:
-                        logger.warning(f"Guardrail triggered on fabricated score: {val_num}/{scale_num} (Auth Risk: {auth_risk}, Auth Conf: {auth_conf})")
-                        redirect_msg = (
-                            f"I can't calculate an independent score or override SHADOW's Risk Engine. "
-                            f"The current Risk Engine risk score is {auth_risk}/{risk_max}. "
-                            f"I can explain the evidence and risk factors behind that score."
-                        )
-                        return redirect_msg, True
+
+            if scale_num in (risk_max, 90, 100):
+                is_valid_risk_ref = (scale_num == risk_max and (auth_risk is None or val_num == int(auth_risk)))
+                is_valid_conf_ref = (scale_num == 100 and (auth_conf is None or val_num == int(auth_conf)))
+
+                if val_num != 0 and not is_valid_risk_ref and not is_valid_conf_ref:
+                    logger.warning(
+                        f"Guardrail triggered on mismatched score: {val_num}/{scale_num} "
+                        f"(Auth Risk: {auth_risk}/{risk_max}, Auth Conf: {auth_conf}/100)"
+                    )
+                    redirect_msg = (
+                        f"I can't calculate an independent score or override SHADOW's Risk Engine. "
+                        f"The current Risk Engine risk score is {auth_risk}/{risk_max}. "
+                        f"I can explain the evidence and risk factors behind that score."
+                    )
+                    return redirect_msg, True
 
     return text, False
 
@@ -124,7 +128,7 @@ async def chat_with_shadow_ai(request: Request, req: ShadowAIChatRequest):
         risk_lvl = sc.get('risk_level') or 'N/A'
         conf_lvl = sc.get('confidence_level') or 'N/A'
         risk_score = sc.get('risk_score', 'N/A')
-        risk_max = sc.get('risk_max') or sc.get('max_score') or 100
+        risk_max = sc.get('risk_max') or sc.get('max_score') or 90
         conf_score = sc.get('confidence_score', 'N/A')
         conf_max = sc.get('confidence_max') or 100
 

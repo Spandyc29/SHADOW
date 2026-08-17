@@ -371,9 +371,11 @@ class FiveW1HGenerator:
         confidence_level = str(raw_confidence.get("level", data.get("confidence", "NEUTRAL"))).upper()
 
         risk_factors = raw_risk.get("factors") or data.get("risk_factors") or ["No specific risk factors flagged."]
+        risk_max = raw_risk.get("risk_max") or raw_risk.get("max_score") or data.get("risk_max") or data.get("max_score") or 90
 
         why = {
             "risk_score": risk_score,
+            "risk_max": risk_max,
             "risk_level": risk_level,
             "confidence_score": confidence_score,
             "confidence_level": confidence_level,
