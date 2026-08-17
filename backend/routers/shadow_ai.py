@@ -166,7 +166,7 @@ async def chat_with_shadow_ai(request: Request, req: ShadowAIChatRequest):
                 "Content-Type": "application/json",
             }
             payload = {
-                "model": "llama-3.3-70b-versatile",
+                "model": "groq/compound-mini",
                 "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_msg},
