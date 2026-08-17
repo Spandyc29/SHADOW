@@ -241,7 +241,7 @@ export default function ShadowFaceSystem({
                 height={isAlert || isError ? "36" : isWarning ? "32" : isThinking || isFocused ? "32" : isAttention ? "58" : "46"}
                 rx={isAlert || isError ? "5" : "14"}
                 fill={isAlert || isError ? "url(#p-eye-alert)" : isWarning ? "url(#p-eye-warning)" : "url(#p-eye-cyan)"}
-                transform={isAlert || isError ? "rotate(6, 162, 125)" : "none"}
+                transform={isAlert || isError ? "rotate(6, 162, 125)" : undefined}
               />
 
               {/* Right Eye */}
@@ -252,7 +252,7 @@ export default function ShadowFaceSystem({
                 height={isAlert || isError ? "36" : isWarning ? "32" : isThinking || isFocused ? "32" : isAttention ? "58" : "46"}
                 rx={isAlert || isError ? "5" : "14"}
                 fill={isAlert || isError ? "url(#p-eye-alert)" : isWarning ? "url(#p-eye-warning)" : "url(#p-eye-cyan)"}
-                transform={isAlert || isError ? "rotate(-6, 298, 125)" : "none"}
+                transform={isAlert || isError ? "rotate(-6, 298, 125)" : undefined}
               />
 
               {/* Pupil Highlights */}

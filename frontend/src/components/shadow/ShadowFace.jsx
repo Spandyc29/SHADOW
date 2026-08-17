@@ -177,7 +177,7 @@ export default function ShadowFace({ expression = 'idle' }) {
                 height={isAlert ? "36" : isThinking ? "32" : isAttention ? "58" : "46"}
                 rx={isAlert ? "5" : "14"}
                 fill={isAlert ? "url(#eye-alert-grad)" : "url(#eye-cyan-grad)"}
-                transform={isAlert ? "rotate(6, 162, 125)" : "none"}
+                transform={isAlert ? "rotate(6, 162, 125)" : undefined}
               />
 
               {/* Right Eye */}
@@ -188,7 +188,7 @@ export default function ShadowFace({ expression = 'idle' }) {
                 height={isAlert ? "36" : isThinking ? "32" : isAttention ? "58" : "46"}
                 rx={isAlert ? "5" : "14"}
                 fill={isAlert ? "url(#eye-alert-grad)" : "url(#eye-cyan-grad)"}
-                transform={isAlert ? "rotate(-6, 298, 125)" : "none"}
+                transform={isAlert ? "rotate(-6, 298, 125)" : undefined}
               />
 
               {/* Iris Pupil & Inner Highlights */}
